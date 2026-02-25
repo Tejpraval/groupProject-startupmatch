@@ -26,7 +26,13 @@ The frontend is the client-side user interface that runs in the browser.
 *   **Axios (`axios`):** A promise-based HTTP client used to seamlessly send `GET/POST/PUT` requests to our backend API.
 *   **Socket.io Client (`socket.io-client`):** Connects the browser to our backend WebSocket server for real-time live chat functionality.
 
-### Backend (Node.js & Express)
+### Backend (Node.js & Express) 
+The backend is built using the Module Pattern (similar to MVC). Every feature follows this exact reading path:
+
+Routes (.routes.js): The traffick cop (e.g., "If someone POSTs to this URL, send them to this Controller function").
+Controllers (.controller.js): The manager (e.g., "Extract the user ID from the request, ask the Service to do the math, and send the final JSON response").
+Services (.service.js): The heavy lifter. Contains the complex business logic, algorithms, and database queries.
+Models (.model.js): The blueprint. Defines the exact Mongoose schema shape for the MongoDB documents.
 The backend is the server-side engine that processes logic, talks to the database, and enforces security.
 *   **Express (`express`):** The core web framework used to define our API routes (e.g., `app.get('/api/v1/...')`) and handle HTTP requests/responses.
 *   **MongoDB & Mongoose (`mongoose`):** MongoDB is our NoSQL database. Mongoose is the Object Data Modeling (ODM) library that allows us to define strict schemas (e.g., making sure a User has a valid Email and Password).
@@ -210,3 +216,20 @@ This is the definitive list of every single RESTful API route we constructed in 
 
 ---
 
+algorithms used for match score : programmatic, weighted rules-based algorithm 
+How the "Generate AI Match" Algorithm Actually Works
+When you click the button, the backend grabs your profile and iterates through every other user profile in the database. It compares your profiles and assigns a compatibility score up to 100 points based on 5 strict rules:
+
+Skill Complementarity (40 points): It checks the skills you selected vs. the other person's skills. It heavily rewards founders who bring different (unique) skills to the table, as startups need diverse skill sets (e.g., a Developer pairing with a Marketer).
+Industry Alignment (20 points): If you both selected the exact same Industry Dropdown (e.g., "Tech"), it instantly adds 20 points.
+Availability Similarity (15 points): It compares the hours/week you are both available. The closer the numbers are to each other, the more points are awarded.
+Experience Balance (15 points): It compares your 1-10 experience sliders. It rewards founders who have roughly the same amount of professional experience.
+Personality Overlap (10 points): (Currently hardcoded in the database schema) It compares personality types to ensure founders won't immediately clash.
+The Filter: If the final calculated score between you and another user is greater than 30, it successfully creates a "Match" card in your feed! 
+
+
+for future goals  : 
+Email Integration: Adding Nodemailer or SendGrid so users can "Verify Email" on signup, or click "Forgot Password" to receive a reset link.
+Image Uploads: Right now profiles rely on colored letter avatars. We could integrate AWS S3 or Cloudinary so users can upload real profile pictures.
+Responsive Mobile Menu: The site works on mobile, but adding a neat "Hamburger Menu" for the navigation bar improves the mobile experience.
+Deployment: Pushing the backend to a cloud server like Render or Heroku, pushing the frontend to Vercel, and changing the MongoDB to a cloud MongoDB Atlas cluster so it is live on the internet!
